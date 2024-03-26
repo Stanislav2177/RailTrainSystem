@@ -95,7 +95,26 @@ public class TestGraph {
 //        Graph<String, DefaultWeightedEdge> graph = settingGraph.getGraph();
 //        DijkstraShortestPath<String, WeightedMultigraph> shortestPathAlg = new DijkstraShortestPath<String, DefaultWeightedEdge>(graph);
 
-        settingGraph.findShortestPath("Sofia", "Pleven");
+        settingGraph.findShortestPath("Dragoman", "Kyustendil");
+        System.out.println();
+    }
+
+    @Test
+    void testNorthBulgaria(){
+        settingGraph.findShortestPath("Mezdra", "Lom");
+        settingGraph.findShortestPath("Vidin", "Mezdra");
+        settingGraph.findShortestPath("Mezdra", "Gorna Oryahovitsa");
+        settingGraph.findShortestPath("Mezdra", "Ruse");
+        settingGraph.findShortestPath("Mezdra", "Karlovo");
 
     }
+
+    @Test
+    void testPaths(){
+        settingGraph.findShortestPath("Mezdra", "Karlovo");
+
+    }
+
+
+
 }

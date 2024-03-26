@@ -1,8 +1,14 @@
 package com.university.project.railTrainSystem.config;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
+import org.jgrapht.alg.interfaces.ShortestPathAlgorithm;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class SettingGraph {
 
@@ -25,7 +31,8 @@ public class SettingGraph {
     };
 
 //    public static Graph<String, DefaultEdge> graph = new WeightedMultigraph<>(DefaultEdge.class);
-        Graph<String, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
+        Graph<String, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
+        private DijkstraShortestPath<String, DefaultWeightedEdge> shortestPathAlg = new DijkstraShortestPath<>(graph);
 
     public Graph<String, DefaultWeightedEdge> getGraph() {
         return graph;
@@ -38,11 +45,69 @@ public class SettingGraph {
     }
 
     public void findShortestPath(String sourceVertex, String targetVertex) {
-        DijkstraShortestPath<String, DefaultWeightedEdge> shortestPathAlg = new DijkstraShortestPath<>(graph);
         double shortestPathLength = shortestPathAlg.getPath(sourceVertex, targetVertex).getLength();
-        System.out.println("Shortest path from " + sourceVertex + " to " + targetVertex + ": " + shortestPathAlg.getPath(sourceVertex, targetVertex));
+        System.out.println( " current " + shortestPathAlg.getPath(sourceVertex, targetVertex));
+//        System.out.println("Shortest path from " + sourceVertex + " to " + targetVertex + ": " + shortestPathAlg.getPath(sourceVertex, targetVertex));
         System.out.println("Shortest path length: " + shortestPathLength);
+
+        String path = String.valueOf(shortestPathAlg.getPath(sourceVertex, targetVertex));
+
+        calculateWeightBetweenTwoPaths(path);
     }
+
+    public int calculateWeightBetweenTwoPaths(String list){
+        //Receiving the whole trace, and then calculating the total kilometers
+        Stack<DefaultWeightedEdge> strings = separateTheWholeTraceToListOfStrings(list);
+        int totalKilometers = 0;
+
+        int size = strings.size();
+
+        for (int i = 0; i < size; i++) {
+            totalKilometers += graph.getEdgeWeight(strings.pop());
+        }
+
+        DefaultWeightedEdge edge = graph.getEdge("Sofia", "Mezdra");
+        double edgeWeight = graph.getEdgeWeight(edge);
+//        System.out.println("sofia - mezdra : " + edgeWeight);
+
+//        System.out.println("total killometers : " + totalKilometers );
+
+        return totalKilometers;
+    }
+
+    private Stack<DefaultWeightedEdge> separateTheWholeTraceToListOfStrings(String trace) {
+        // Remove the leading and trailing brackets
+        trace = trace.substring(1, trace.length() - 1);
+
+        // Split the string by comma and space to separate individual pairs
+        String[] pairs = trace.split(", ");
+
+        // Create a list to store the separated strings
+        Stack<DefaultWeightedEdge> stack = new Stack<>();
+
+        // Iterate through each pair and add it to the list
+        for (String pair : pairs) {
+            // Remove the parentheses around each pair
+            pair = pair.substring(1, pair.length() - 1);
+            // Split the pair by colon to separate the vertices
+            String[] vertices = pair.split(" : ");
+            // Add the separated vertices to the list
+            stack.push(graph.getEdge(vertices[0], vertices[1]));
+        }
+
+        // Print or use the separated strings as needed
+        System.out.println(stack);
+        return stack;
+    }
+
+
+
+
+
+//    public void getPaths(String vertex){
+//        ShortestPathAlgorithm.SingleSourcePaths<String, DefaultWeightedEdge> paths = shortestPathAlg.getPaths(vertex);
+//        paths.getGraph().
+//    }
 
     public void settingEdgesForEachVertex(){
         graph.setEdgeWeight(graph.addEdge("Dragoman", "Sofia"), getRandomWeight(15, 45));
@@ -57,6 +122,7 @@ public class SettingGraph {
         graph.setEdgeWeight(graph.addEdge("Lom", "Vidin"), getRandomWeight(15, 45));
         graph.setEdgeWeight(graph.addEdge("Cherven Bryag", "Pleven"), getRandomWeight(15, 45));
         graph.setEdgeWeight(graph.addEdge("Pleven", "Pavlikeni"), getRandomWeight(15, 45));
+        graph.setEdgeWeight(graph.addEdge("Gorna Oryahovitsa", "Pavlikeni"), getRandomWeight(15, 45));
         graph.setEdgeWeight(graph.addEdge("Gorna Oryahovitsa", "Ruse"), getRandomWeight(15, 45));
         graph.setEdgeWeight(graph.addEdge("Gorna Oryahovitsa", "Tyrgovishte"), getRandomWeight(15, 45));
         graph.setEdgeWeight(graph.addEdge("Gorna Oryahovitsa", "Veliko Tyrnovo"), getRandomWeight(15, 45));
