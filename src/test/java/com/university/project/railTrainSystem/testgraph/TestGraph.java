@@ -1,25 +1,15 @@
-package com.university.project.railTrainSystem.TestGraph;
+package com.university.project.railTrainSystem.testgraph;
 
 
-import com.university.project.railTrainSystem.config.SettingGraph;
-import org.jgrapht.Graph;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.WeightedMultigraph;
+import com.university.project.railTrainSystem.engine.setgraph.SettingGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.jgrapht.alg.shortestpath.AStarShortestPath;
 
 import java.util.Deque;
-import java.util.List;
 
 public class TestGraph {
 
     SettingGraph settingGraph = new SettingGraph();
-
-
 
     @Test
     void printAllEdges() {
@@ -53,26 +43,6 @@ public class TestGraph {
             System.out.println("There is no connection between " + vertex1 + " and " + vertex2);
         }
     }
-//
-//    @Test
-//    void testShortestPath() {
-//        settingGraph.addingVertexToGraph();
-//        settingGraph.settingEdgesForEachVertex();
-//
-//        String sourceVertex = "Sofia";
-//        String targetVertex = "Vratsa";
-//
-//        AStarShortestPath<String, DefaultEdge> shortestPath = new AStarShortestPath<>(settingGraph.getGraph());
-//        List<DefaultEdge> path = (List<DefaultEdge>) shortestPath.getPath(sourceVertex, targetVertex);
-//
-//        if (path != null) {
-//            System.out.println("There is a connection between " + sourceVertex + " and " + targetVertex);
-//            System.out.println("Path: " + path);
-//        } else {
-//            System.out.println("There is no connection between " + sourceVertex + " and " + targetVertex);
-//        }
-//    }
-
 
     @Test
     void testIterator(){
@@ -112,6 +82,52 @@ public class TestGraph {
     @Test
     void testPaths(){
         settingGraph.findShortestPath("Mezdra", "Karlovo");
+    }
+
+    @Test
+    void testRailway1(){
+        settingGraph.findShortestPath("Dragoman", "Svilengrad");
+    }
+
+    @Test
+    void testRailway2(){
+        settingGraph.findShortestPath("Sofia", "Varna");
+    }
+
+    @Test
+    void testRailway3(){
+        settingGraph.findShortestPath("Ilianci", "Varna");
+    }
+
+    @Test
+    void testRailway4(){
+        settingGraph.findShortestPath("Ruse", "Podkova");
+    }
+
+    @Test
+    void testRailway5(){
+        settingGraph.findShortestPath("Sofia", "Kulata");
+    }
+
+    @Test
+    void testRailway6(){
+        settingGraph.findShortestPath("Sofia", "Kyustendil");
+    }
+
+    @Test
+    void testRailway7(){
+        settingGraph.findShortestPath("Mezdra", "Vidin");
+    }
+
+    @Test
+    void testRailway8(){
+        settingGraph.findShortestPath("Plovdiv", "Burgas");
+    }
+
+
+    @Test
+    void testRailway9(){
+        settingGraph.findShortestPath("Ruse", "Kaspichan");
 
     }
 
