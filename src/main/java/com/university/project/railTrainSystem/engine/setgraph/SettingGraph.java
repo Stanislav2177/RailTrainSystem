@@ -63,9 +63,9 @@ public class SettingGraph {
             total += graph.getEdgeWeight(edges.get(i));
         }
 
-        System.out.println(total);
+//        System.out.println("Total kilometers " + total);
 
-        return 0;
+        return total;
     }
 
 

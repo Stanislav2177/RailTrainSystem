@@ -44,21 +44,6 @@ public class TestGraph {
         }
     }
 
-    @Test
-    void testIterator(){
-        settingGraph.addingVertexToGraph();
-        settingGraph.settingEdgesForEachVertex();
-        DepthFirstIterator depthFirstIterator
-                = new DepthFirstIterator<>(settingGraph.getGraph());
-
-        Deque stack = depthFirstIterator.getStack();
-        while (stack.isEmpty()){
-            System.out.println(stack.pop());
-        }
-
-
-        // not working
-    }
 
     @Test
     void testDjiikstraAlgorithm(){

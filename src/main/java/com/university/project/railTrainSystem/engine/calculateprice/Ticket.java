@@ -1,4 +1,4 @@
-package com.university.project.railTrainSystem.engine.tickets;
+package com.university.project.railTrainSystem.engine.calculateprice;
 
 import java.sql.Timestamp;
 
@@ -8,10 +8,13 @@ public class Ticket {
     private String start;
     private String end;
     private Double price;
-    private String trainId;
+    private Long trainId;
     private Timestamp boughtAt;
 
-    public Ticket(Long id, String start, String end, Double price, String trainId, Timestamp boughtAt) {
+    public Ticket() {
+    }
+
+    public Ticket(Long id, String start, String end, Double price, Long trainId, Timestamp boughtAt) {
         Id = id;
         this.start = start;
         this.end = end;
@@ -52,11 +55,11 @@ public class Ticket {
         this.price = price;
     }
 
-    public String getTrainId() {
+    public Long getTrainId() {
         return trainId;
     }
 
-    public void setTrainId(String trainId) {
+    public void setTrainId(Long trainId) {
         this.trainId = trainId;
     }
 
@@ -66,5 +69,17 @@ public class Ticket {
 
     public void setBoughtAt(Timestamp boughtAt) {
         this.boughtAt = boughtAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "Id=" + Id +
+                ", start='" + start + '\'' +
+                ", end='" + end + '\'' +
+                ", price=" + price +
+                ", trainId=" + trainId +
+                ", boughtAt=" + boughtAt +
+                '}';
     }
 }

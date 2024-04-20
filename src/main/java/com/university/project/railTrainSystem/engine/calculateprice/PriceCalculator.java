@@ -13,6 +13,8 @@ public class PriceCalculator {
         List<DefaultWeightedEdge> shortestPathEdges = graph.findShortestPathEdges(startStation, finalStation);
         double v = graph.calculateWeightBetweenTwoPaths(shortestPathEdges);
 
+        System.out.println("weight " + v);
+
         return v*CENT_PER_KILOMETER;
     }
 }
