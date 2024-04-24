@@ -27,8 +27,9 @@ public class SettingGraph {
     };
 
 //    public static Graph<String, DefaultEdge> graph = new WeightedMultigraph<>(DefaultEdge.class);
-        Graph<String, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
-        private DijkstraShortestPath<String, DefaultWeightedEdge> shortestPathAlg = new DijkstraShortestPath<>(graph);
+    Graph<String, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
+    private DijkstraShortestPath<String, DefaultWeightedEdge> shortestPathAlg = new DijkstraShortestPath<>(graph);
+
 
     public Graph<String, DefaultWeightedEdge> getGraph() {
         return graph;
@@ -44,8 +45,6 @@ public class SettingGraph {
         double shortestPathLength = shortestPathAlg.getPath(sourceVertex, targetVertex).getLength();
         System.out.println( " Shortest path for  "
                 +sourceVertex + " and "+ targetVertex + shortestPathAlg.getPath(sourceVertex, targetVertex));
-//        System.out.println("Shortest path from " + sourceVertex + " to " + targetVertex + ": " + shortestPathAlg.getPath(sourceVertex, targetVertex));
-//        System.out.println("Shortest path length: " + shortestPathLength);
 
         String path = String.valueOf(shortestPathAlg.getPath(sourceVertex, targetVertex));
 

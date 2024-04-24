@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,9 @@ public class UserServiceImplTest {
     void testGetUser() {
         String existingEmail = "stan@test.com";
         User user1 = new User("Stan", "Yankov", "stan@test.com", "password");
+        User user2 = new User("Stan", "Yankov", "stan@test.com", "password");
 
+        when(repository.findAll()).thenReturn(Arrays.asList(user1));
         when(repository.findAll()).thenReturn(Arrays.asList(user1));
 
         User foundUser = userService.getUser(existingEmail);
@@ -61,6 +64,8 @@ public class UserServiceImplTest {
         assertEquals("stan@test.com", foundUser.getEmail());
         assertEquals("password", foundUser.getPassword());
         verify(repository, times(1)).findAll();
+
+
     }
 
     @Test
@@ -78,5 +83,6 @@ public class UserServiceImplTest {
         assertEquals("stan1@test.com", allUsers.get(1).getEmail());
         verify(repository, times(1)).findAll();
     }
+
 }
 

@@ -1,11 +1,17 @@
 package com.university.project.railTrainSystem.engine.calculateprice;
 
 import com.university.project.railTrainSystem.entity.User;
+import com.university.project.railTrainSystem.repository.UserRepository;
+import com.university.project.railTrainSystem.service.UserService;
+import com.university.project.railTrainSystem.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+@Service
 public class CalculateFinalPrice {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/rail_train_system";
@@ -13,7 +19,8 @@ public class CalculateFinalPrice {
     static final String PASS = "34153";
     TicketPriceCalculator ticketPriceCalculator = new TicketPriceCalculator();
 
-
+    @Autowired
+    UserService userService;
 
 
     public double getFinalPrice(String start, String end, User user) throws SQLException {
@@ -28,13 +35,30 @@ public class CalculateFinalPrice {
 
         // Check the card type and apply discounts accordingly
 
+        return applyDiscount(aTicket.getPrice(), userTypeCard, isPeakHours);
+    }
+
+    public double getFinalPrice(String start, String end, String  email) throws SQLException {
+        // Base price
+
+
+        User user = userService.getUser(email);
+        Ticket aTicket = ticketPriceCalculator.getATicket(start, end);
+        CardType userTypeCard = getUserTypeCard(user);
+
+        Timestamp boughtAt = aTicket.getBoughtAt();
+
+        // Check if the ticket was bought during peak hours
+        boolean isPeakHours = isPeakHours(boughtAt);
+
+        // Check the card type and apply discounts accordingly
 
         return applyDiscount(aTicket.getPrice(), userTypeCard, isPeakHours);
     }
-    // Method to calculate final price based on dynamic pricing rules
 
-        // Method to check if the ticket was bought during peak hours
-        // Method to apply discounts based on card type and peak hours
+    // Method to calculate final price based on dynamic pricing rules
+    // Method to check if the ticket was bought during peak hours
+    // Method to apply discounts based on card type and peak hours
 
     private boolean isPeakHours(Timestamp boughtAt) {
         Calendar calendar = Calendar.getInstance();
@@ -70,8 +94,7 @@ public class CalculateFinalPrice {
 
 
 
-
-    public static CardType getUserTypeCard(User user) throws SQLException {
+    public CardType getUserTypeCard(User user) throws SQLException {
         String sql = "SELECT * FROM card WHERE user_id = ?";
         Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
         PreparedStatement pstsm = connection.prepareStatement(sql);

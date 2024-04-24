@@ -5,11 +5,13 @@ import com.university.project.railTrainSystem.engine.railways.CheckTheGraphInWhi
 import com.university.project.railTrainSystem.engine.setgraph.SettingGraph;
 import com.university.project.railTrainSystem.engine.trains.TrainService;
 import com.university.project.railTrainSystem.entity.User;
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,6 +24,13 @@ public class TestEngine {
     TicketPriceCalculator ticketPriceCalculator = new TicketPriceCalculator();
 
 
+
+    @Test
+    void testWeight(){
+        List<DefaultWeightedEdge> shortestPathEdges = graph.findShortestPathEdges("Plovdiv", "Burgas");
+        double v = graph.calculateWeightBetweenTwoPaths(shortestPathEdges);
+
+    }
     @Test
     void testCalculator(){
         double priceBetweenTwoStations = calculator.getPriceBetweenTwoStations("Mezdra", "Karlovo");

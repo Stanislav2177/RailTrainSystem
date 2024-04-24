@@ -4,6 +4,7 @@ import com.university.project.railTrainSystem.engine.calculateprice.PriceCalcula
 import com.university.project.railTrainSystem.engine.calculateprice.Ticket;
 import com.university.project.railTrainSystem.engine.trains.Train;
 import com.university.project.railTrainSystem.engine.trains.TrainService;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -12,6 +13,7 @@ import java.util.Random;
 import java.text.DecimalFormat;
 
 
+@Service
 public class TicketPriceCalculator {
     PriceCalculator priceCalculator = new PriceCalculator();
     TrainService trainService = new TrainService();
